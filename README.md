@@ -10,19 +10,19 @@ $ open https://git-scm.com
 
 ## Tasks
 
-- [ ] 1. Создать публичный репозиторий с названием **lab02** и с лиценцией **MIT**
-- [ ] 2. Сгенирировать токен для доступа к сервису **GitHub** с правами **repo**
-- [ ] 3. Ознакомиться со ссылками учебного материала
-- [ ] 4. Выполнить инструкцию учебного материала
-- [ ] 5. Составить отчет и отправить ссылку личным сообщением в **Slack**
+- [x] 1. Создать публичный репозиторий с названием **lab02** и с лиценцией **MIT**
+- [x] 2. Сгенирировать токен для доступа к сервису **GitHub** с правами **repo**
+- [x] 3. Ознакомиться со ссылками учебного материала
+- [x] 4. Выполнить инструкцию учебного материала
+- [x] 5. Составить отчет и отправить ссылку личным сообщением в **Slack**
 
 ## Tutorial
 
 ```sh
-$ export GITHUB_USERNAME=<имя_пользователя>
-$ export GITHUB_EMAIL=<адрес_почтового_ящика>
-$ export GITHUB_TOKEN=<сгенирированный_токен>
-$ alias edit=<nano|vi|vim|subl>
+$ export GITHUB_USERNAME=Tasia11
+$ export GITHUB_EMAIL=anastasiyaosipova2001@gmail.com
+$ export GITHUB_TOKEN=**************************************
+$ alias edit=subl
 ```
 
 ```sh
@@ -32,6 +32,8 @@ $ source scripts/activate
 
 ```sh
 $ mkdir ~/.config
+mkdir: невозможно создать каталог «/home/asya-tanis/.config»: Файл существует
+
 $ cat > ~/.config/hub <<EOF
 github.com:
 - user: ${GITHUB_USERNAME}
@@ -44,16 +46,28 @@ $ git config --global hub.protocol https
 ```sh
 $ mkdir projects/lab02 && cd projects/lab02
 $ git init
+Инициализирован пустой репозиторий Git в /home/asya-tanis/Tasia11/workspace/projects/lab02/.git/
 $ git config --global user.name ${GITHUB_USERNAME}
 $ git config --global user.email ${GITHUB_EMAIL}
 # check your git global settings
 $ git config -e --global
 $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab02.git
 $ git pull origin master
+remote: Enumerating objects: 93, done.
+remote: Total 93 (delta 0), reused 0 (delta 0), pack-reused 93
+Распаковка объектов: 100% (93/93), готово.
+Из https://github.com/Tasia11/lab02
+ * branch            master     -> FETCH_HEAD
+ * [новая ветка]     master     -> origin/master
+
 $ touch README.md
 $ git status
+На ветке master
+нечего коммитить, нет изменений в рабочем каталоге
 $ git add README.md
 $ git commit -m"added README.md"
+На ветке master
+нечего коммитить, нет изменений в рабочем каталоге
 $ git push origin master
 ```
 
@@ -69,6 +83,10 @@ $ git push origin master
 
 ```sh
 $ git pull origin master
+Из https://github.com/Tasia11/lab02
+ * branch            master     -> FETCH_HEAD
+Уже обновлено.
+
 $ git log
 ```
 
@@ -158,39 +176,116 @@ $ gist REPORT.md
 1. Создайте пустой репозиторий на сервисе github.com (или gitlab.com, или bitbucket.com).
 2. Выполните инструкцию по созданию первого коммита на странице репозитория, созданного на предыдещем шаге.
 3. Создайте файл `hello_world.cpp` в локальной копии репозитория (который должен был появиться на шаге 2). Реализуйте программу **Hello world** на языке C++ используя плохой стиль кода. Например, после заголовочных файлов вставьте строку `using namespace std;`.
+```
+$ cat > helloworld.cpp<<EOF
+#include <iostream>
+using namespace std;
+int main() {
+    cout<<"Hello world!"<<endl;
+    system("pause");
+    return 0;
+}```
+
 4. Добавьте этот файл в локальную копию репозитория.
+```
+$ git add .
+```
 5. Закоммитьте изменения с *осмысленным* сообщением.
+```
+$ git commit -m "Hello! My name is Anastasiya"
+```
 6. Изменитьте исходный код так, чтобы программа через стандартный поток ввода запрашивалось имя пользователя. А в стандартный поток вывода печаталось сообщение `Hello world from @name`, где `@name` имя пользователя.
+```
+& cat > helloworld.cpp<<EOF
+> #include <iostream>
+> #include <string>
+> using namespace std;
+> int main() {
+> string name;
+> cin>>name;	
+> cout<<"Hello, "<<name<<" !"<<endl;
+> system("pause")
+> return 0;
+> EOF ```
+
 7. Закоммитьте новую версию программы. Почему не надо добавлять файл повторно `git add`?
 8. Запуште изменения в удалёный репозиторий.
+```
+$ git commit -m "HelloWorld for Lab02"
+```
 9. Проверьте, что история коммитов доступна в удалёный репозитории.
 
 ### Part II
 
 **Note:** *Работать продолжайте с теми же репоззиториями, что и в первой части задания.*
 1. В локальной копии репозитория создайте локальную ветку `patch1`.
+```
+$ git checkout -b patch1
+```
 2. Внесите изменения в ветке `patch1` по исправлению кода и избавления от `using namespace std;`.
 3. **commit**, **push** локальную ветку в удалённый репозиторий.
+```
+$ git add "helloworld.cpp"
+$ git commit -m "new helloworld"
+$ git push origin patch1
+```
 4. Проверьте, что ветка `patch1` доступна в удалёный репозитории.
 5. Создайте pull-request `patch1 -> master`.
 6. В локальной копии в ветке `patch1` добавьте в исходный код комментарии.
 7. **commit**, **push**.
+```
+$ git commit -m "add comments"
+```
 8. Проверьте, что новые изменения есть в созданном на **шаге 5** pull-request
 9. В удалённый репозитории выполните  слияние PR `patch1 -> master` и удалите ветку `patch1` в удаленном репозитории.
 10. Локально выполните **pull**.
+```
+$ git pull
+```
 11. С помощью команды **git log** просмотрите историю в локальной версии ветки `master`.
+```
+$ git log
+```
 12. Удалите локальную ветку `patch1`.
-
+```
+$ git branch -d patch1
+```
 ### Part III
 
 **Note:** *Работать продолжайте с теми же репоззиториями, что и в первой части задания.*
 1. Создайте новую локальную ветку `patch2`.
+```
+$ git checkout -b patch2
+```
 2. Измените *code style* с помощью утилиты [**clang-format**](http://clang.llvm.org/docs/ClangFormat.html). Например, используя опцию `-style=Mozilla`.
+```
+$ brew install -g clang-format
+$ clang-format -i -style=Mozilla hello_world.cpp
+```
 3. **commit**, **push**, создайте pull-request `patch2 -> master`.
+```
+$ git commit -m "added styles" 
+$ git push origin patch2 
+```
 4. В ветке **master** в удаленном репозитории измените комментарии, например, расставьте знаки препинания, переведите комментарии на другой язык.
 5. Убедитесь, что в pull-request появились *конфликтны*.
 6. Для этого локально выполните **pull** + **rebase** (точную последовательность команд, следует узнать самостоятельно). **Исправьте конфликты**.
+```
+$ git add .
+$ git pull
+$ git checkout master
+$ git pull origin master
+$ git checkout patch2
+$ git rebase master
+$ git commit -m "delete conflict"
+$ git rebase --continue
+$ git checkout master
+$ git merge patch2
+```
 7. Сделайте *force push* в ветку `patch2`
+```
+$ git push -f origin patch2
+```
 8. Убедитель, что в pull-request пропали конфликтны. 
 9. Вмержите pull-request `patch2 -> master`.
 
@@ -205,4 +300,4 @@ $ gist REPORT.md
 ```
 Copyright (c) 2015-2020 The ISC Authors
 ```
-# lab02-1
+
