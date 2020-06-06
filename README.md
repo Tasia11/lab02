@@ -181,7 +181,7 @@ $ cat > helloworld.cpp<<EOF
 #include <iostream>
 using namespace std;
 int main() {
-    cout<<"Hello world!"<<endl;
+    cout<<"Hello world"<<endl;
     system("pause");
     return 0;
 }```
@@ -192,26 +192,29 @@ $ git add .
 ```
 5. Закоммитьте изменения с *осмысленным* сообщением.
 ```
-$ git commit -m "Hello! My name is Anastasiya"
+$ git commit -m "added hello_world.cpp"
 ```
 6. Изменитьте исходный код так, чтобы программа через стандартный поток ввода запрашивалось имя пользователя. А в стандартный поток вывода печаталось сообщение `Hello world from @name`, где `@name` имя пользователя.
+```sh
+$ cat > hello_world.cpp <<EOF
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	string name;
+	getline(cin, name);
+	cout<<"Hello world from"<<name<<endl;
+	system ("pause");
+	return 0;
+}
+EOF
 ```
-& cat > helloworld.cpp<<EOF
-> #include <iostream>
-> #include <string>
-> using namespace std;
-> int main() {
-> string name;
-> cin>>name;	
-> cout<<"Hello, "<<name<<" !"<<endl;
-> system("pause")
-> return 0;
-> EOF ```
 
 7. Закоммитьте новую версию программы. Почему не надо добавлять файл повторно `git add`?
 8. Запуште изменения в удалёный репозиторий.
-```
-$ git commit -m "HelloWorld for Lab02"
+```sh
+$ git push origin master
 ```
 9. Проверьте, что история коммитов доступна в удалёный репозитории.
 
@@ -223,6 +226,21 @@ $ git commit -m "HelloWorld for Lab02"
 $ git checkout -b patch1
 ```
 2. Внесите изменения в ветке `patch1` по исправлению кода и избавления от `using namespace std;`.
+```sh
+$ subl hello_world.cpp
+$ cat > hello_world.cpp <<EOF
+#include <iostream>
+
+int main()
+{
+	std::string name;
+	getline(cin, name);
+	std::cout<<"Hello world from"<<name<<std::endl;
+	system ("pause");
+	return 0;
+}
+EOF
+```
 3. **commit**, **push** локальную ветку в удалённый репозиторий.
 ```
 $ git add "helloworld.cpp"
